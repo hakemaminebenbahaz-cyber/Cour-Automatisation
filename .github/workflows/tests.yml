@@ -33,3 +33,39 @@ jobs:
         run: |
           cd build
           ./calculator add 10 5
+
+  Test_Sub:
+    runs-on: ubuntu-latest
+    needs: Compilation
+    steps:
+      - name: Tester la fonction sub
+        run: |
+          cd build
+          ./calculator sub 10 5
+
+  Test_Mul:
+    runs-on: ubuntu-latest
+    needs: Compilation
+    steps:
+      - name: Tester la fonction mul
+        run: |
+          cd build
+          ./calculator mul 10 5
+
+  Test_Div:
+    runs-on: ubuntu-latest
+    needs: Compilation
+    steps:
+      - name: Tester la fonction div
+        run: |
+          cd build
+          ./calculator div 10 5
+
+  Test_car:
+    runs-on: ubuntu-latest
+    needs: Compilation
+    steps:
+      - name: Tester la fonction car
+        run: |
+          cd build
+          ./calculator car 5
