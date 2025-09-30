@@ -32,4 +32,4 @@ jobs:
       - name: Tester la fonction add
         run: |
           cd build
-          ./src/calculator add 10 5
+          ./calculator add 10 5
