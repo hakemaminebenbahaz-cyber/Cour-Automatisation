@@ -25,8 +25,10 @@ int main(int argc, char *argv[]){
 	else if (strcmp(op, "div") == 0) {
 		r = _div(atof(a), atof(b));
 		printf("%lf",r);
-	}
-	else {printf("Erreur de parametres");}
+	}else if (strcmp(op, "car")==0) {
+		r = _car(atof(a));
+		print("%lf",r);
+	]else {printf("Erreur de parametres");}
 	}
 	else {printf("Erreur de parametres");}
 	return 0;
