@@ -1,26 +1,19 @@
-name: Tests
+name: Calculator CI
 
 on:
   push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
 
 jobs:
   Compilation:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Installer les dépendances
-        run: sudo apt-get update && sudo apt-get install -y cmake build-essential
-
-      - name: Compiler le projet
+      - name: Build project
         run: |
-          mkdir -p build
+          mkdir build
           cd build
           cmake ..
           make
@@ -29,43 +22,84 @@ jobs:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Tester la fonction add
+      - name: Test fonction add
         run: |
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
+          mkdir build
           cd build
-          ./calculator add 10 5
+          cmake ..
+          make
+          ./src/calculator add 10 5 | grep 15
 
-  Test_sub:
+  Test_Sub:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Tester la fonction sub
+      - name: Test fonction sub
         run: |
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
+          mkdir build
           cd build
-          ./calculator sub 10 5
+          cmake ..
+          make
+          ./src/calculator sub 10 5 | grep 5
 
-  Test_mul:
+  Test_Mul:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Tester la fonction mul
+      - name: Test fonction mul
         run: |
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
+          mkdir build
           cd build
-          ./calculator mul 10 5
+          cmake ..
+          make
+          ./src/calculator mul 10 5 | grep 50
 
-  Test_div:
+  Test_Div:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Tester la fonction div
+      - name: Test fonction div
         run: |
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
+          mkdir build
           cd build
-          ./calculator div 10 5
+          cmake ..
+          make
+          ./src/calculator div 10 5 | grep 2
 
-  Test_car:
+  Test_Car:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Tester la fonction car
+      - name: Test fonction car
         run: |
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
+          mkdir build
           cd build
-          ./calculator car 5
+          cmake ..
+          make
+          ./src/calculator car 5 | grep 25
+  Deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - Test_Add
+      - Test_Sub
+      - Test_Mul
+      - Test_Div
+      - Test_Car
+    steps:
+      - name: Echo déploiement
+        run: echo "Déploiement de la solution"
