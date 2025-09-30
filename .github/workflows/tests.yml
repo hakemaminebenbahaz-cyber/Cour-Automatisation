@@ -11,6 +11,6 @@ jobs:
           cd ./$last_directory
           mkdir build
           cd build
-          cmake ..
+          cmake . 
           make
           make test
